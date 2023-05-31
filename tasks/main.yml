@@ -1,0 +1,21 @@
+---
+# tasks file for mysql
+- name: Install dnsmasq
+  apt:
+    pkg:
+      - dnsmasq
+    state: latest
+    update_cache: true
+- name: Configuring dnsmasq
+  template:
+    src: "templates/dnsmasq.conf"
+    dest: "/etc/dnsmasq.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart dnsmasq
+- name: start service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
